@@ -127,21 +127,32 @@ function VacationBikeWaiverForm() {
         {success && <Alert color="success">Form submitted successfully!</Alert>}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <input placeholder="First Name" {...register("firstname", { required: true })} className="form-control mb-2" />
-          <input placeholder="Last Name" {...register("lastname", { required: true })} className="form-control mb-2" />
-          <input placeholder="Email" type="email" {...register("email", { required: true })} className="form-control mb-2" />
-          <input placeholder="Phone Number" {...register("phone", { required: true })} className="form-control mb-2" />
+          <div>First Name</div>
+          <input  {...register("firstname", { required: true })} className="form-control mb-2" />
+          <div>Last Name</div>
+          <input  {...register("lastname", { required: true })} className="form-control mb-2" />
+          <div>Email</div>
+          <input  type="email" {...register("email", { required: true })} className="form-control mb-2" />
+          <div>Phone Number</div>
+          <input {...register("phone", { required: true })} className="form-control mb-2" />
           <div>Rental Date</div>
           <input placeholder="Rental Date" type="date"  {...register("rentalDate", { required: true })} className="form-control mb-2" />
           <div>Date of birth</div>
           <input placeholder="Date of Birth" type="date" {...register("dob")} className="form-control mb-2" />
-          <input placeholder="Gender (optional)" {...register("gender")} className="form-control mb-2" />
-          <input placeholder="Height" {...register("height")} className="form-control mb-2" />
-          <input placeholder="Weight" {...register("weight")} className="form-control mb-2" />
-          <input placeholder="Helmet Size" {...register("helmetSize")} className="form-control mb-2" />
-          <input placeholder="Emergency Contact Name" {...register("emergencyContact")} className="form-control mb-2" />
-          <input placeholder="Emergency Contact Phone" {...register("emergencyPhone")} className="form-control mb-2" />
-          <textarea placeholder="Medical Conditions or Allergies" {...register("medicalConditions")} className="form-control mb-2" rows="2" />
+          <div>Gender(optional)</div>
+          <input  {...register("gender")} className="form-control mb-2" />
+          <div>Height</div>
+          <input  {...register("height")} className="form-control mb-2" />
+          <div>Weight</div>
+          <input {...register("weight")} className="form-control mb-2" />
+          <div>Helmet Size</div>
+          <input  {...register("helmetSize")} className="form-control mb-2" />
+          <div>Emergency Contact Name</div>
+          <input  {...register("emergencyContact")} className="form-control mb-2" />
+          <div>Emergency Contact Phone</div>
+          <input {...register("emergencyPhone")} className="form-control mb-2" />
+          <div>Medical Conditions or Allergies</div>
+          <textarea Medical Conditions or Allergies {...register("medicalConditions")} className="form-control mb-2" rows="2" />
           <textarea placeholder="Other Notes" {...register("otherNotes")} className="form-control mb-2" rows="2" />
 
           <div className="form-check mb-4">
