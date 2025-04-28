@@ -125,6 +125,22 @@ function VacationBikeWaiverForm() {
 
         {error && <Alert color="danger">{error}</Alert>}
         {success && <Alert color="success">Form submitted successfully!</Alert>}
+        <div className="form-check mb-4">
+            <input type="checkbox" {...register("waiverAgreement", { required: true })} className="form-check-input" id="waiverCheck" disabled={!scrolledToBottom} />
+            <label className="form-check-label" htmlFor="waiverCheck">
+              I agree to the official Vacation Bike Rentals LLC Bicycle Rental Agreement below.
+            </label>
+            <div><a href="/waiver-info" target="_blank" rel="noopener noreferrer">Read full waiver in separate tab</a></div>
+          </div>
+
+          <div className="mb-4" style={{ maxHeight: "300px", overflowY: "scroll", border: "1px solid #ccc", padding: "1rem" }} onScroll={(e) => {
+              const el = e.target;
+              if (el.scrollHeight - el.scrollTop === el.clientHeight) {
+                setScrolledToBottom(true);
+              }
+            }}>
+            <p style={{ whiteSpace: 'pre-wrap' }}>{waiverText}</p>
+          </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>First Name</div>
@@ -155,23 +171,7 @@ function VacationBikeWaiverForm() {
           <textarea Medical Conditions or Allergies {...register("medicalConditions")} className="form-control mb-2" rows="2" />
           <textarea placeholder="Other Notes" {...register("otherNotes")} className="form-control mb-2" rows="2" />
 
-          <div className="form-check mb-4">
-            <input type="checkbox" {...register("waiverAgreement", { required: true })} className="form-check-input" id="waiverCheck" disabled={!scrolledToBottom} />
-            <label className="form-check-label" htmlFor="waiverCheck">
-              I agree to the official Vacation Bike Rentals LLC Bicycle Rental Agreement below.
-            </label>
-            <div><a href="/waiver-info" target="_blank" rel="noopener noreferrer">Read full waiver in separate tab</a></div>
-          </div>
-
-          <div className="mb-4" style={{ maxHeight: "300px", overflowY: "scroll", border: "1px solid #ccc", padding: "1rem" }} onScroll={(e) => {
-              const el = e.target;
-              if (el.scrollHeight - el.scrollTop === el.clientHeight) {
-                setScrolledToBottom(true);
-              }
-            }}>
-            <p style={{ whiteSpace: 'pre-wrap' }}>{waiverText}</p>
-          </div>
-
+       
           <div className="mb-4">
             <p className="font-weight-bold mb-2">Signature:</p>
             <SignatureCanvas
