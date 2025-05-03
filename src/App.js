@@ -167,19 +167,40 @@ function VacationBikeWaiverForm() {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <input placeholder="Rental Date" type="date"  {...register("rentalDate", { required: true })} className="form-control mb-2" />
-          <input placeholder="First Name"  {...register("firstname", { required: true })} className="form-control mb-2" />
-          <input placeholder="Last Name"  {...register("lastname", { required: true })} className="form-control mb-2" />
-          <input placeholder="Date of Birth" type="date" {...register("dob")} className="form-control mb-2" />
-          <input placeholder="Email" type="email" {...register("email", { required: true })} className="form-control mb-2" />
-          <input placeholder="Phone Number" {...register("phone", { required: true })} className="form-control mb-2" />
-          <input placeholder="Height"  {...register("height")} className="form-control mb-2" />
-          <input placeholder="Weight" {...register("weight")} className="form-control mb-2" />
-          <input placeholder="Helmet Size"  {...register("helmetsize")} className="form-control mb-2" />
-          <input placeholder="Emergency Contact Name"  {...register("emergencycontact")} className="form-control mb-2" />
-          <input placeholder="Emergency Contact Phone" {...register("emergencyphone")} className="form-control mb-2" />
-          <textarea placeholder="Medical Conditions or Allergies" {...register("medicalconditions")} className="form-control mb-2" rows="2" />
-          <textarea placeholder="Other Notes" {...register("otherNotes")} className="form-control mb-2" rows="2" />
+          <div>Rental Date</div>
+          <input type="date"  {...register("rentalDate", { required: true })} className="form-control mb-2" />
+          <div>First Name</div>
+          <input {...register("firstname", { required: true })} className="form-control mb-2" />
+          <div>Last Name</div>
+          <input {...register("lastname", { required: true })} className="form-control mb-2" />
+          <div>Date of Birth</div>
+          <input type="date" {...register("dob")} className="form-control mb-2" />
+          <div>Email</div>
+          <input type="email" {...register("email", { required: true })} className="form-control mb-2" />
+          <div>Phone Number</div>
+          <input {...register("phone", { required: true })} className="form-control mb-2" />
+          <div>Height</div>
+          <input {...register("height")} className="form-control mb-2" />
+          <div>Weight</div>
+          <input {...register("weight")} className="form-control mb-2" />
+          <div className="mb-2">
+            <label>Helmet Size</label>
+            <select {...register("helmetsize")} className="form-control">
+              <option value="">Select size</option>
+              <option value="S">Small</option>
+              <option value="M">Medium</option>
+              <option value="L">Large</option>
+              <option value="XL">Extra Large</option>
+            </select>
+          </div>
+          <div>Emergency Contact Name</div>
+          <input {...register("emergencycontact")} className="form-control mb-2" />
+          <div>Emergency Contact Phone</div>
+          <input {...register("emergencyphone")} className="form-control mb-2" />
+          <div>Medical Conditions or Allergies</div>
+          <textarea {...register("medicalconditions")} className="form-control mb-2" rows="2" />
+          <div>Other Notes</div>
+          <textarea {...register("otherNotes")} className="form-control mb-2" rows="2" />
 
           <div className="mb-4">
             <p className="font-weight-bold mb-2">Signature:</p>
