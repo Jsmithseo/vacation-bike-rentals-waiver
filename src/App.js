@@ -111,7 +111,7 @@ function VacationBikeWaiverForm() {
         pdf.save("VacationBikeWaiver.pdf");
 
         setSuccess(true);
-        navigate("/thank-you");
+        navigate("https://www.vacationbikerentals.com/thank-you");
       }, 300);
 
     } catch (error) {
