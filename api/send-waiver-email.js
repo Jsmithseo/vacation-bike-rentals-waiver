@@ -53,4 +53,12 @@ router.post("/send-waiver-email", upload.single("pdf"), async (req, res) => {
   }
 });
 
+export const config = {
+    api: {
+      bodyParser: {
+        sizeLimit: '10mb', // or higher if needed
+      },
+    },
+  };
+  
 module.exports = router;
