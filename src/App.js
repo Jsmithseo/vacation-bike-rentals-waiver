@@ -22,6 +22,9 @@ function VacationBikeWaiverForm() {
   const [scrolledToBottom, setScrolledToBottom] = useState(false);
   const navigate = useNavigate();
 
+
+
+
   const todayDate = new Date().toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -108,7 +111,23 @@ function VacationBikeWaiverForm() {
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF();
         pdf.addImage(imgData, "PNG", 10, 10, 190, 270);
-        pdf.save("VacationBikeWaiver.pdf");
+
+
+       // Prepare PDF for emailing
+       const pdfBlob = pdf.output("blob");
+       const pdfFile = new File([pdfBlob], "waiver.pdf", { type: "application/pdf" });
+
+       const emailFormData = new FormData();
+       emailFormData.append("pdf", pdfFile);
+       emailFormData.append("userEmail", data.email);
+       emailFormData.append("formFields", JSON.stringify(data));
+
+       await fetch("/api/send-waiver-email", {
+        method: "POST",
+        body: emailFormData
+      });
+
+      pdf.save("VacationBikeWaiver.pdf");
 
         setSuccess(true);
         window.location.href = "https://www.vacationbikerentals.com/thank-you";
