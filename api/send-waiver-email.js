@@ -1,7 +1,7 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
 const multer = require("multer");
-const upload = multer();
+const upload = multer({ limits: { fileSize: 10 * 1024 * 1024 } }); // 10 MB limit
 require("dotenv").config();
 
 const router = express.Router();
@@ -53,12 +53,4 @@ router.post("/send-waiver-email", upload.single("pdf"), async (req, res) => {
   }
 });
 
-export const config = {
-    api: {
-      bodyParser: {
-        sizeLimit: '10mb', // or higher if needed
-      },
-    },
-  };
-  
 module.exports = router;
