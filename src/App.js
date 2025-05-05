@@ -113,35 +113,19 @@ function VacationBikeWaiverForm() {
         pdf.addImage(imgData, "PNG", 10, 10, 190, 270);
 
 
- // Prepare PDF
-const pdfBlob = pdf.output("blob");
-const pdfFile = new File([pdfBlob], "waiver.pdf", { type: "application/pdf" });
+       // Prepare PDF for emailing
+       const pdfBlob = pdf.output("blob");
+       const pdfFile = new File([pdfBlob], "waiver.pdf", { type: "application/pdf" });
 
-const hubspotFormData = new FormData();
-hubspotFormData.append("file", pdfFile);
-hubspotFormData.append("options", JSON.stringify({
-  access: "PRIVATE", // keep this private for internal use
-  ttl: "P3M", // 3 months file retention
-  overwrite: false
-}));
+       const emailFormData = new FormData();
+       emailFormData.append("pdf", pdfFile);
+       emailFormData.append("userEmail", data.email);
+       emailFormData.append("formFields", JSON.stringify(data));
 
-// Upload to HubSpot Files API
-const uploadResponse = await fetch("https://api.hubapi.com/files/v3/files/upload", {
-  method: "POST",
-  headers: {
-    Authorization: `Bearer YOUR_HUBSPOT_PRIVATE_APP_TOKEN`, // 👈 Replace this with your actual token
-  },
-  body: hubspotFormData
-});
-
-const fileResult = await uploadResponse.json();
-
-if (uploadResponse.ok) {
-  console.log("Uploaded file URL:", fileResult.url);
-  // You could store this URL in a CRM note, custom property, or internal log
-} else {
-  console.error("HubSpot upload failed:", fileResult);
-}
+       await fetch("/api/send-waiver-email", {
+        method: "POST",
+        body: emailFormData
+      });
 
       pdf.save("VacationBikeWaiver.pdf");
 
