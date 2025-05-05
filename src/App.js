@@ -158,7 +158,7 @@ function VacationBikeWaiverForm() {
             disabled={!scrolledToBottom}
           />
           <label className="form-check-label" htmlFor="waiverCheck">
-            I agree to the official Vacation Bike Rentals LLC Bicycle Rental Agreement below.
+          I have read and understand the terms and conditions of this agreement from Vacation Bike Rentals.
           </label>
         </div>
 
