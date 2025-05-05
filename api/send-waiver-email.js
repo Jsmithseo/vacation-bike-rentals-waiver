@@ -5,15 +5,20 @@ require("dotenv").config();
 
 const router = express.Router();
 
-// ✅ Use memoryStorage to get access to req.file.buffer
+// ✅ Use memoryStorage and set file size limit (50MB)
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 50 * 1024 * 1024 }, // 50 MB
 });
 
-router.post("/send-waiver-email", upload.single("pdf"), async (req, res) => {
+router.post("http://localhost:5000/api/send-waiver-email", upload.single("pdf"), async (req, res) => {
   try {
     const { userEmail, formFields } = req.body;
+
+    if (!req.file) {
+      return res.status(400).json({ message: "No PDF uploaded." });
+    }
+
     const pdfBuffer = req.file.buffer;
     const data = JSON.parse(formFields);
 
