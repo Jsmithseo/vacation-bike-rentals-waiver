@@ -11,13 +11,14 @@ const upload = multer({
   limits: { fileSize: 50 * 1024 * 1024 }, // 50 MB
 });
 
-router.post("http://localhost:5000/api/send-waiver-email", upload.single("pdf"), async (req, res) => {
+router.post("https://vacation-bike-rentals-waiver.vercel.app/api/send-waiver-email", upload.single("pdf"), async (req, res) => {
   try {
     const { userEmail, formFields } = req.body;
 
     if (!req.file) {
       return res.status(400).json({ message: "No PDF uploaded." });
     }
+
 
     const pdfBuffer = req.file.buffer;
     const data = JSON.parse(formFields);
