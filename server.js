@@ -1,7 +1,7 @@
 // server.js
 const express = require("express");
 const cors = require("cors");
-const waiverRoutes = require("./routes/send-waiver-email"); // Adjust if your path is different
+const waiverRoutes = require("./api/send-waiver-email"); // Adjust if your path is different
 require("dotenv").config();
 
 const app = express();
