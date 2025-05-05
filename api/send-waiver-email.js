@@ -1,7 +1,7 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
 const multer = require("multer");
-const upload = multer({ limits: { fileSize: 10 * 1024 * 1024 } }); // 10 MB limit
+const upload = multer({ limits: { fileSize: 50 * 1024 * 1024 } }); // 10 MB limit
 require("dotenv").config();
 
 const router = express.Router();
