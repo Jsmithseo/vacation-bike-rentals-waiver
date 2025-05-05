@@ -1,10 +1,15 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
 const multer = require("multer");
-const upload = multer({ limits: { fileSize: 50 * 1024 * 1024 } }); // 10 MB limit
 require("dotenv").config();
 
 const router = express.Router();
+
+// ✅ Use memoryStorage to get access to req.file.buffer
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 50 * 1024 * 1024 }, // 50 MB
+});
 
 router.post("/send-waiver-email", upload.single("pdf"), async (req, res) => {
   try {
