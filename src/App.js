@@ -107,31 +107,75 @@ function VacationBikeWaiverForm() {
       });
 
       setTimeout(async () => {
-        const canvas = await html2canvas(formRef.current);
+        const waiverElement = formRef.current;
+        
+        // Optional: Scroll waiver into view before capture
+        waiverElement.scrollIntoView();
+        await new Promise((resolve) => setTimeout(resolve, 500)); // slight delay to ensure rendering
+      
+        const canvas = await html2canvas(waiverElement, {
+          scale: 2,
+          useCORS: true
+        });
+      
         const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF();
-        pdf.addImage(imgData, "PNG", 10, 10, 190, 270);
-
-
-       // Prepare PDF for emailing
-       const pdfBlob = pdf.output("blob");
-       const pdfFile = new File([pdfBlob], "waiver.pdf", { type: "application/pdf" });
-
-       const emailFormData = new FormData();
-       emailFormData.append("pdf", pdfFile);
-       emailFormData.append("userEmail", data.email);
-       emailFormData.append("formFields", JSON.stringify(data));
-
-       await fetch("/api/send-waiver-email", {
-        method: "POST",
-        body: emailFormData
-      });
-
-      pdf.save("VacationBikeWaiver.pdf");
-
+        const pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "mm",
+          format: "a4"
+        });
+      
+        const pageHeight = pdf.internal.pageSize.height;
+        let y = 0;
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      
+        if (imgHeight < pageHeight) {
+          pdf.addImage(imgData, "PNG", 0, y, pdfWidth, imgHeight);
+        } else {
+          let position = 0;
+          while (position < imgHeight) {
+            pdf.addImage(imgData, "PNG", 0, position ? 0 : y, pdfWidth, imgHeight);
+            position += pageHeight;
+            if (position < imgHeight) pdf.addPage();
+          }
+        }
+      
+        // Send to HubSpot
+        const pdfBlob = pdf.output("blob");
+        const pdfFile = new File([pdfBlob], "waiver.pdf", { type: "application/pdf" });
+      
+        const hubspotFormData = new FormData();
+        hubspotFormData.append("file", pdfFile);
+        hubspotFormData.append("options", JSON.stringify({
+          access: "PRIVATE",
+          ttl: "P3M",
+          overwrite: false
+        }));
+      
+        const uploadResponse = await fetch("https://api.hubapi.com/files/v3/files/upload", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer YOUR_HUBSPOT_PRIVATE_APP_TOKEN`, // ← replace this in production
+          },
+          body: hubspotFormData
+        });
+      
+        const fileResult = await uploadResponse.json();
+      
+        if (uploadResponse.ok) {
+          console.log("Uploaded file URL:", fileResult.url);
+        } else {
+          console.error("HubSpot upload failed:", fileResult);
+        }
+      
+        pdf.save("VacationBikeWaiver.pdf");
+      
         setSuccess(true);
         window.location.href = "https://www.vacationbikerentals.com/thank-you";
       }, 300);
+      
 
     } catch (error) {
       console.error(error);
