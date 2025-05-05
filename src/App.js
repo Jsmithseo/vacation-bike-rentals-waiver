@@ -91,10 +91,10 @@ function VacationBikeWaiverForm() {
         { name: "dob", value: data.dob || "" },
         { name: "height", value: data.height || "" },
         { name: "weight", value: data.weight || "" },
-        { name: "helmetsize", value: data.helmetSize || "" },
-        { name: "emergencycontact", value: data.emergencyContact || "" },
-        { name: "emergencyphone", value: data.emergencyPhone || "" },
-        { name: "medicalconditions", value: data.medicalConditions || "" },
+        { name: "helmetsize", value: data.helmetsize || "" },
+        { name: "emergencycontact", value: data.emergencycontact || "" },
+        { name: "emergencyphone", value: data.emergencyphone || "" },
+        { name: "medicalConditions", value: data.medicalConditions || "" },
         { name: "othernotes", value: data.otherNotes || "" }
       ],
     };
@@ -212,7 +212,7 @@ function VacationBikeWaiverForm() {
           <div>Emergency Contact Phone</div>
           <input {...register("emergencyphone")} className="form-control mb-2" />
           <div>Medical Conditions or Allergies</div>
-          <textarea {...register("medicalconditions")} className="form-control mb-2" rows="2" />
+          <textarea {...register("medicalConditions")} className="form-control mb-2" rows="2" />
           <div>Other Notes</div>
           <textarea {...register("otherNotes")} className="form-control mb-2" rows="2" />
 

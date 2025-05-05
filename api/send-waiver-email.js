@@ -39,7 +39,9 @@ router.post("/api/send-waiver-email", upload.single("pdf"), async (req, res) => 
       <p><strong>Rental Date:</strong> ${data.rentalDate}</p>
       <p><strong>DOB:</strong> ${data.dob}</p>
       <p><strong>Helmet Size:</strong> ${data.helmetsize}</p>
-      <p><strong>Medical Conditions:</strong> ${data.medicalconditions}</p>
+      <p><strong>emergencycontact:</strong> ${data.emergencycontact}</p>
+      <p><strong>emergencyphone:</strong> ${data.emergencyphone}</p>
+      <p><strong>medicalConditions:</strong> ${data.medicalConditions}</p>
       <p><strong>Other Notes:</strong> ${data.otherNotes}</p>
     `;
 
